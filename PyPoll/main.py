@@ -2,7 +2,7 @@
 import csv
 
 #opening election data csv
-with open("election_data.csv",newline = '') as election:
+with open("election_data.csv",newline = '', encoding = 'UTF-8') as election:
     
     #skip header
     csvreader = csv.reader(election, delimiter = ',')
