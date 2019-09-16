@@ -2,7 +2,7 @@
 import csv
 
 #opening csv in same working directory as this script 
-with open ("budget_data.csv",newline = "") as budget:
+with open ("budget_data.csv",newline = "", encoding='utf-8') as budget:
 
     #reading csv, skipping header
     csvreader = csv.reader(budget, delimiter = ",")
