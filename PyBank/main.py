@@ -31,13 +31,15 @@ with open ("budget_data.csv",newline = "", encoding='utf-8') as budget:
             if len(my_values) > 1:
                 my_change.append(my_values[len(my_values)-1] - my_values[len(my_values)-2])
                 
+                #if current element is the largest positive change so far, assign as bigprofit variable and store date
                 if my_change[len(my_change)-1] == max(my_change):
                     my_bigprofit = my_change[len(my_change)-1]
-                    my_positive_date = row[0]
-                
+                    bigprofit_date = row[0]
+                    
+                #same thing for largest negative change
                 if my_change[len(my_change)-1] == min(my_change):
                     my_bigloss = my_change[len(my_change)-1]
-                    my_negative_date = row[0]
+                    bigloss_date = row[0]
             
     
     #average profit/loss
@@ -45,10 +47,6 @@ with open ("budget_data.csv",newline = "", encoding='utf-8') as budget:
     
     #formating net profit/loss 
     net_PL = sum(my_values)
-    
-    #takes last values of lists which have corresponding dates
-    bigprofit_date = my_positive_date
-    bigloss_date = my_negative_date
     
     #printing
     message = "Financial Analysis\n----------------------------\nTotal Months: {}\nTotal: ${}\nAverage Change: {}\nGreatest Increase in Profits: {} (${})\nGreatest Decrease in Profits: {} (${})".format(my_months, net_PL, average_change, bigprofit_date, int(my_bigprofit), bigloss_date, int(my_bigloss))    
