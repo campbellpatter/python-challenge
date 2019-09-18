@@ -9,63 +9,52 @@ with open ("budget_data.csv",newline = "", encoding='utf-8') as budget:
     csv_header = next(csvreader)
     
     #initializing variables to be appended
-    my_profit = [0]
-    my_profit_date = []
-    my_loss = [0]
-    my_loss_date = []
-    
+    my_positive = [0]
+    my_positive_date = []
+    my_negative = [0]
+    my_negative_date = []
+    my_change = []
+    my_values = []
     #initializing counters
     my_months = 0
-    net_PL = 0
     
     #loop through rows
     for row in csvreader:
             
             #declaring second column value to be a float for performing math operations
-            pL = float(row[1])
+            my_values.append(float(row[1]))
             
             #iterating counters
             my_months += 1
-            net_PL += pL
             
-            #checks if profit, and if greater than last largest profit, appends if true
-            if pL > 0 and pL > my_profit[len(my_profit)-1]:
+            #creates list of difference values b/w adjacent elements
+            if len(my_values) > 1:
+                my_change.append(my_values[len(my_values)-1] - my_values[len(my_values)-2])
                 
-                #append to increasing profits list
-                my_profit.append(pL)
-                #append to dates of increasing profits list
-                my_profit_date.append(row[0])
+                if my_change[len(my_change)-1] == max(my_change):
+                    my_bigprofit = my_change[len(my_change)-1]
+                    my_positive_date = row[0]
+                
+                if my_change[len(my_change)-1] == min(my_change):
+                    my_bigloss = my_change[len(my_change)-1]
+                    my_negative_date = row[0]
             
-            #checks if loss, and if greater than last largest loss
-            if pL < 0 and pL < my_loss[len(my_loss)-1]:
-                
-                #append to increasing losses list
-                my_loss.append(pL)
-                #append to dates of increasing losses list
-                my_loss_date.append(row[0])
     
     #average profit/loss
-    average_PL = round(net_PL/my_months,2)
+    average_change = round(sum(my_change)/(my_months-1),2)
     
     #formating net profit/loss 
-    net_PL = int(net_PL)
-    
-    #takes last value of increasing profits list
-    my_bigprofit = my_profit.pop()
-    
-    #takes last value of increasing losses list
-    my_bigloss = my_loss.pop()
+    net_PL = sum(my_values)
     
     #takes last values of lists which have corresponding dates
-    bigprofit_date = my_profit_date.pop()
-    bigloss_date = my_loss_date.pop()
+    bigprofit_date = my_positive_date
+    bigloss_date = my_negative_date
     
     #printing
-    message = "Financial Analysis\n----------------------------\nTotal Months: {}\nTotal: ${}\nAverage Change: {}\nGreatest Increase in Profits: {} (${})\nGreatest Decrease in Profits: {} (${})".format(my_months, net_PL, average_PL, bigprofit_date, int(my_bigprofit), bigloss_date, int(my_bigloss))    
+    message = "Financial Analysis\n----------------------------\nTotal Months: {}\nTotal: ${}\nAverage Change: {}\nGreatest Increase in Profits: {} (${})\nGreatest Decrease in Profits: {} (${})".format(my_months, net_PL, average_change, bigprofit_date, int(my_bigprofit), bigloss_date, int(my_bigloss))    
     print(message)
     
     #writing to text file
     output = open("output.txt","w")
     output.write(message)
     output.close()
-            
