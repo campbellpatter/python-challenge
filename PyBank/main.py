@@ -21,7 +21,7 @@ with open ("budget_data.csv",newline = "", encoding='utf-8') as budget:
     #loop through rows
     for row in csvreader:
             
-            #declaring second column value to be a float for performing math operations
+            #declaring second element in row to be a float for and appending to list
             my_values.append(float(row[1]))
             
             #iterating counters
@@ -42,17 +42,26 @@ with open ("budget_data.csv",newline = "", encoding='utf-8') as budget:
                     bigloss_date = row[0]
             
     
-    #average profit/loss
-    average_change = round(sum(my_change)/(my_months-1),2)
+#average profit/loss
+average_change = round(sum(my_change)/(my_months-1),2)
     
-    #formating net profit/loss 
-    net_PL = sum(my_values)
+#total profit/loss 
+net_PL = sum(my_values)
     
-    #printing
-    message = "Financial Analysis\n----------------------------\nTotal Months: {}\nTotal: ${}\nAverage Change: {}\nGreatest Increase in Profits: {} (${})\nGreatest Decrease in Profits: {} (${})".format(my_months, net_PL, average_change, bigprofit_date, int(my_bigprofit), bigloss_date, int(my_bigloss))    
-    print(message)
+#creating message
+message = "Financial Analysis\n\
+----------------------------\n\
+Total Months: {}\n\
+Total: ${}\n\
+Average Change: {}\n\
+Greatest Increase in Profits: {} (${})\n\
+Greatest Decrease in Profits: {} (${})"\
+.format(my_months, net_PL, average_change, bigprofit_date, int(my_bigprofit), bigloss_date, int(my_bigloss))
+ 
+#printing to terminal
+print(message)
     
-    #writing to text file
-    output = open("output.txt","w")
-    output.write(message)
-    output.close()
+#writing to .txt file
+output = open("output.txt","w")
+output.write(message)
+output.close()
