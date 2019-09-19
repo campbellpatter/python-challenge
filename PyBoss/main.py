@@ -16,15 +16,15 @@ with open(filepath, newline = '') as csvfile:
         emp_ID = row[0]
         first = row[1].split(' ')[0]
         last = row[1].split(' ')[1]
-        DOB = row[2].split('-')[1] + '/' + row[2].split('-')[2] + '/' + row[2].split('-')[0]
-        SSN = '***-***-' + row[3].split('-')[2]
+        dob = row[2].split('-')[1] + '/' + row[2].split('-')[2] + '/' + row[2].split('-')[0]
+        ssn = '***-***-' + row[3].split('-')[2]
         
         #using dictionary from abbreviation doc
         if row[4] in my_dict:
-            State = my_dict[row[4]]
+            state = my_dict[row[4]]
             
         #writing new list of variables to outrow list
-        outrow.append([emp_ID, first, last, DOB, SSN, State])
+        outrow.append([emp_ID, first, last, dob, ssn, state])
     
 #write to output csv   
 with open('output.csv', 'w', newline='') as out:
